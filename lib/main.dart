@@ -1,86 +1,63 @@
+import 'package:deriv_app_sample/connection_page.dart';
+import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_cubit.dart';
+import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_state.dart';
+import 'package:deriv_app_sample/core/bloc_manager/event_listener_contracts/available_contract_event_listner.dart';
+import 'package:deriv_app_sample/core/bloc_manager/state_emitters/active_symbols_state_emitter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_deriv_api/services/connection/api_manager/connection_information.dart';
+import 'package:flutter_deriv_api/state/connection/connection_cubit.dart';
+import 'package:flutter_deriv_bloc_manager/bloc_managers/base_bloc_manager.dart';
+import 'package:flutter_deriv_bloc_manager/bloc_managers/bloc_manager.dart';
+import 'package:flutter_deriv_bloc_manager/bloc_observer.dart';
+import 'package:flutter_deriv_bloc_manager/event_dispatcher.dart';
 
-import 'app.dart';
+import 'core/Presentation/blocs/ActiveSymbols/active_symbol_cubit.dart';
+import 'core/bloc_manager/state_emitters/available_contract_state_emitter.dart';
+import 'core/bloc_manager/state_emitters/connection_state_emitter.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = CubitObserver();
+  registerCoreBlocs();
+  initializeEventDispatcher();
+  runApp(MyApp());
+}
 
 /// The main widget.
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   @override
-  Widget build(BuildContext context) => const MaterialApp(home: App());
+  Widget build(BuildContext context) => MaterialApp(home: AppScreen());
 }
 
+void registerCoreBlocs() {
+  BlocManager.instance
+    ..register(
+      ConnectionCubit(
+        ConnectionInformation(
+          appId: '1089',
+          brand: 'binary',
+          endpoint: 'frontend.binaryws.com',
+        ),
+      ),
+    )
+    ..register(ActiveSymbolCubit())
+    ..register(AvailableContractsCubit());
+}
 
-// import 'package:deriv_app_sample/pages/main_page.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_deriv_api/services/connection/api_manager/connection_information.dart';
-// import 'package:flutter_deriv_api/state/connection/connection_cubit.dart';
-// import 'package:flutter_deriv_bloc_manager/bloc_managers/base_bloc_manager.dart';
-// import 'package:flutter_deriv_bloc_manager/bloc_managers/bloc_manager.dart';
-// import 'package:flutter_deriv_bloc_manager/bloc_observer.dart';
-// import 'package:flutter_deriv_bloc_manager/event_dispatcher.dart';
-// import 'package:flutter_deriv_api/state/connection/connection_cubit.dart'
-//     as api_connection;
-// import 'core/bloc_manager/state_emitters/active_symbols_state_emitter.dart';
-// import 'core/bloc_manager/state_emitters/connection_state_emitter.dart';
-// import 'core/states/active_symbol/active_symbol_cubit.dart';
-
-// void main() {
-//   // WidgetsFlutterBinding.ensureInitialized();
-//   // Bloc.observer = CubitObserver();
-//   // registerCoreBlocs();
-//   // initializeEventDispatcher();
-//   runApp(const App());
-// }
-
-// class App extends StatelessWidget {
-//   const App({Key? key}) : super(key: key);
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: MainPage(),
-//     );
-//   }
-// }
-
-// void initialize() {
-//   _connectionCubit = api_connection.ConnectionCubit(
-//       ConnectionInformation(
-//         appId: '1089',
-//         brand: 'binary',
-//         endpoint: 'frontend.binaryws.com',
-//       ),
-//     );
-// }
-// void registerCoreBlocs() {
-//   BlocManager.instance
-//     ..register(
-//       ConnectionCubit(
-//         ConnectionInformation(
-//             appId: '1089', brand: 'binary', endpoint: 'frontend.binaryws.com'),
-//       ),
-//     )
-//     ..register(ActiveSymbolCubit());
-// }
-
-// /// Initializes event dispatcher.
-// void initializeEventDispatcher() => EventDispatcher(BlocManager.instance)
-//   ..register<ConnectionCubit, ConnectionStateEmitter>(
-//     (BaseBlocManager blocManager) => ConnectionStateEmitter(blocManager),
-//   )
-//   ..register<ActiveSymbolCubit, ActiveSymbolsStateEmitter>(
-//     (BaseBlocManager blocManager) => ActiveSymbolsStateEmitter(blocManager),
-//   );
+/// Initializes event dispatcher.
+void initializeEventDispatcher() => EventDispatcher(BlocManager.instance)
+  ..register<ConnectionCubit, ConnectionStateEmitter>(
+    (BaseBlocManager blocManager) => ConnectionStateEmitter(blocManager),
+  )
+  ..register<ActiveSymbolCubit, ActiveSymbolsStateEmitter>(
+    (BaseBlocManager blocManager) => ActiveSymbolsStateEmitter(blocManager),
+  )
+  ..register<AvailableContractsCubit, AvailableContractStateEmitter>(
+    (BaseBlocManager blocManager) => AvailableContractStateEmitter(blocManager),
+  );

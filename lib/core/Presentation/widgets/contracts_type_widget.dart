@@ -1,12 +1,21 @@
-import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_bloc.dart';
+import 'package:deriv_app_sample/core/Presentation/blocs/ActiveSymbols/active_symbol_cubit.dart';
+import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_deriv_api/api/common/active_symbols/active_symbols.dart';
 import 'package:flutter_deriv_api/api/contract/models/available_contract_model.dart';
 
 /// ContractsTypeWidget
 class ContractsTypeWidget extends StatefulWidget {
-  const ContractsTypeWidget({Key? key}) : super(key: key);
+  const ContractsTypeWidget({
+    required this.availableContractsCubit,
+    Key? key,
+  }) : super(key: key);
+
+  /// Market item to be shown along with its subscription cubit.
+
+  final AvailableContractsCubit availableContractsCubit;
 
   @override
   _ContractsTypeWidgetState createState() => _ContractsTypeWidgetState();
@@ -14,13 +23,11 @@ class ContractsTypeWidget extends StatefulWidget {
 
 class _ContractsTypeWidgetState extends State<ContractsTypeWidget> {
   // ignore: close_sinks
-  AvailableContractsBloc? _availableContractsBloc;
+  AvailableContractsCubit? _availableContractsCubit;
 
   @override
   void initState() {
     super.initState();
-
-    _availableContractsBloc = BlocProvider.of<AvailableContractsBloc>(context);
   }
 
   @override
@@ -33,9 +40,9 @@ class _ContractsTypeWidgetState extends State<ContractsTypeWidget> {
               Padding(
                 padding: const EdgeInsets.all(5),
                 child: Center(
-                  child: BlocBuilder<AvailableContractsBloc,
+                  child: BlocBuilder<AvailableContractsCubit,
                       AvailableContractsState>(
-                    bloc: _availableContractsBloc,
+                    bloc: widget.availableContractsCubit,
                     builder:
                         (BuildContext context, AvailableContractsState state) {
                       if (state is AvailableContractsLoaded) {
