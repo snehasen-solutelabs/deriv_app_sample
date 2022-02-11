@@ -1,10 +1,10 @@
-import 'package:deriv_app_sample/feature/splash/presentation/main_page.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_deriv_api/state/connection/connection_cubit.dart'
     as connection_cubit;
 import 'package:flutter_deriv_bloc_manager/manager.dart';
+
+import 'main_page.dart';
 
 class AppScreen extends StatefulWidget {
   const AppScreen({Key? key}) : super(key: key);

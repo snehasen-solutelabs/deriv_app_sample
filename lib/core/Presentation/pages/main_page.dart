@@ -1,9 +1,9 @@
-import 'package:deriv_app_sample/core/Presentation/blocs/ActiveSymbols/active_symbol_cubit.dart';
-import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_cubit.dart';
-import 'package:deriv_app_sample/core/Presentation/blocs/ticks/tick_stream_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/widgets/active_symbol_widget.dart';
 import 'package:deriv_app_sample/core/Presentation/widgets/contracts_type_widget.dart';
 import 'package:deriv_app_sample/core/Presentation/widgets/tick_display_widget.dart';
+import 'package:deriv_app_sample/core/state/ActiveSymbols/active_symbol_cubit.dart';
+import 'package:deriv_app_sample/core/state/AvailableContracts/available_contracts_cubit.dart';
+import 'package:deriv_app_sample/core/state/TickStream/tick_stream_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_deriv_bloc_manager/bloc_managers/bloc_manager.dart';

@@ -1,6 +1,6 @@
-import 'package:deriv_app_sample/core/Presentation/blocs/ActiveSymbols/active_symbol_cubit.dart';
-import 'package:deriv_app_sample/core/Presentation/blocs/ActiveSymbols/active_symbols_state.dart';
-import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_cubit.dart';
+import 'package:deriv_app_sample/core/state/ActiveSymbols/active_symbol_cubit.dart';
+import 'package:deriv_app_sample/core/state/ActiveSymbols/active_symbols_state.dart';
+import 'package:deriv_app_sample/core/state/AvailableContracts/available_contracts_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_deriv_bloc_manager/manager.dart';
