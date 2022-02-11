@@ -1,11 +1,9 @@
-import 'package:deriv_app_sample/core/Presentation/blocs/ActiveSymbols/active_symbol_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_deriv_api/api/common/active_symbols/active_symbols.dart';
 import 'package:flutter_deriv_api/api/contract/models/available_contract_model.dart';
-import 'package:flutter_deriv_bloc_manager/bloc_managers/bloc_manager.dart';
 
 /// ContractsTypeWidget
 class ContractsTypeWidget extends StatefulWidget {
@@ -29,12 +27,6 @@ class _ContractsTypeWidgetState extends State<ContractsTypeWidget> {
 
   @override
   void initState() {
-    BlocManager.instance.fetch<AvailableContractsCubit>();
-
-    BlocManager.instance
-        .fetch<AvailableContractsCubit>()
-        .onLoadedSymbol(widget.activeSymbol);
-
     super.initState();
   }
 
@@ -42,7 +34,7 @@ class _ContractsTypeWidgetState extends State<ContractsTypeWidget> {
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.all(8),
         child: Card(
-          elevation: 4,
+          elevation: 5,
           child: Stack(
             children: <Widget>[
               Padding(
@@ -54,7 +46,10 @@ class _ContractsTypeWidgetState extends State<ContractsTypeWidget> {
                     builder:
                         (BuildContext context, AvailableContractsState state) {
                       if (state is AvailableContractsLoaded) {
-                        return ListView.builder(
+                        return ListView.separated(
+                          separatorBuilder: (context, index) => const Divider(
+                            color: Colors.black,
+                          ),
                           padding: const EdgeInsets.all(5),
                           itemCount:
                               state.contracts!.availableContracts!.length,
@@ -62,38 +57,35 @@ class _ContractsTypeWidgetState extends State<ContractsTypeWidget> {
                             final AvailableContractModel contract =
                                 state.contracts!.availableContracts![index]!;
 
-                            return Card(
-                              elevation: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    "Category : ${contract.contractCategory!}",
-                                    style: const TextStyle(fontSize: 14),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    "Name : ${contract.contractDisplay!}",
-                                    style: const TextStyle(fontSize: 14),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    "Market : ${contract.market!}",
-                                    style: const TextStyle(fontSize: 14),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    "Sub Market : ${contract.submarket!}",
-                                    style: const TextStyle(fontSize: 14),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(height: 10),
-                                ],
-                              ),
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 10),
+                                Text(
+                                  "Category : ${contract.contractCategory!}",
+                                  style: const TextStyle(fontSize: 14),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  "Name : ${contract.contractDisplay!}",
+                                  style: const TextStyle(fontSize: 14),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  "Market : ${contract.market!}",
+                                  style: const TextStyle(fontSize: 14),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  "Sub Market : ${contract.submarket!}",
+                                  style: const TextStyle(fontSize: 14),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 10),
+                              ],
                             );
                           },
                         );

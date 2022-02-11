@@ -187,7 +187,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.3.3"
+    version: "7.1.0"
   flutter_deriv_api:
     dependency: "direct main"
     description:
@@ -327,7 +327,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.2"
+    version: "5.0.0"
   pub_semver:
     dependency: transitive
     description:

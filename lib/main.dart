@@ -1,8 +1,8 @@
 import 'package:deriv_app_sample/connection_page.dart';
 import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_cubit.dart';
-import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_state.dart';
-import 'package:deriv_app_sample/core/bloc_manager/event_listener_contracts/available_contract_event_listner.dart';
+import 'package:deriv_app_sample/core/Presentation/blocs/ticks/tick_stream_cubit.dart';
 import 'package:deriv_app_sample/core/bloc_manager/state_emitters/active_symbols_state_emitter.dart';
+import 'package:deriv_app_sample/core/bloc_manager/state_emitters/tick_stream_state_emitter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_deriv_api/services/connection/api_manager/connection_information.dart';
@@ -11,7 +11,6 @@ import 'package:flutter_deriv_bloc_manager/bloc_managers/base_bloc_manager.dart'
 import 'package:flutter_deriv_bloc_manager/bloc_managers/bloc_manager.dart';
 import 'package:flutter_deriv_bloc_manager/bloc_observer.dart';
 import 'package:flutter_deriv_bloc_manager/event_dispatcher.dart';
-
 import 'core/Presentation/blocs/ActiveSymbols/active_symbol_cubit.dart';
 import 'core/bloc_manager/state_emitters/available_contract_state_emitter.dart';
 import 'core/bloc_manager/state_emitters/connection_state_emitter.dart';
@@ -21,18 +20,20 @@ void main() {
   Bloc.observer = CubitObserver();
   registerCoreBlocs();
   initializeEventDispatcher();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 /// The main widget.
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   @override
-  Widget build(BuildContext context) => MaterialApp(home: AppScreen());
+  Widget build(BuildContext context) => const MaterialApp(home: AppScreen());
 }
 
 void registerCoreBlocs() {
@@ -47,6 +48,7 @@ void registerCoreBlocs() {
       ),
     )
     ..register(ActiveSymbolCubit())
+    ..register(TickStreamCubit())
     ..register(AvailableContractsCubit());
 }
 
@@ -57,6 +59,9 @@ void initializeEventDispatcher() => EventDispatcher(BlocManager.instance)
   )
   ..register<ActiveSymbolCubit, ActiveSymbolsStateEmitter>(
     (BaseBlocManager blocManager) => ActiveSymbolsStateEmitter(blocManager),
+  )
+  ..register<TickStreamCubit, TickStateEmitter>(
+    (BaseBlocManager blocManager) => TickStateEmitter(blocManager),
   )
   ..register<AvailableContractsCubit, AvailableContractStateEmitter>(
     (BaseBlocManager blocManager) => AvailableContractStateEmitter(blocManager),

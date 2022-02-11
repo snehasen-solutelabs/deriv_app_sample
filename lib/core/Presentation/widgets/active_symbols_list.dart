@@ -1,6 +1,7 @@
 import 'package:deriv_app_sample/core/Presentation/blocs/ActiveSymbols/active_symbol_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/blocs/ActiveSymbols/active_symbols_state.dart';
 import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_cubit.dart';
+import 'package:deriv_app_sample/core/Presentation/blocs/ticks/tick_stream_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,11 @@ class ActiveSymbolsList extends StatelessWidget {
                       BlocManager.instance
                           .fetch<AvailableContractsCubit>()
                           .onLoadedSymbol(activeSymbol);
+
+                      // on load contract from selected symbol
+                      BlocManager.instance
+                          .fetch<TickStreamCubit>()
+                          .onLoadedSymbolTickView(activeSymbol);
 
                       Navigator.of(context).pop();
                     },

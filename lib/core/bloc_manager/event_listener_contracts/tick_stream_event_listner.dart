@@ -11,4 +11,6 @@ abstract class TickEventListener implements BaseEventListener {
 
   /// On Contract error event handler.
   void onTickError(String error);
+
+  void onTickInitial();
 }
