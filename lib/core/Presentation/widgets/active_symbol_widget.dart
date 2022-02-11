@@ -30,9 +30,6 @@ class _ActiveSymbolsWidgetState extends State<ActiveSymbolsWidget> {
 
   @override
   void initState() {
-    BlocManager.instance
-        .fetch<AvailableContractsCubit>()
-        .onLoadedSymbol(widget.activeSymbolCubit.state.selectedSymbol);
     super.initState();
   }
 
