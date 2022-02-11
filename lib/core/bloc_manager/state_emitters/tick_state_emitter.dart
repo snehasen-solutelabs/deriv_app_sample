@@ -2,6 +2,7 @@ import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/avai
 import 'package:deriv_app_sample/core/Presentation/blocs/ticks/tick_stream_cubit.dart';
 
 import 'package:deriv_app_sample/core/bloc_manager/event_listener_contracts/tick_stream_event_listner.dart';
+import 'package:deriv_app_sample/core/state/TickStream/tick_stream_cubit.dart';
 import 'package:flutter_deriv_bloc_manager/manager.dart';
 
 /// Tick state emitter.
