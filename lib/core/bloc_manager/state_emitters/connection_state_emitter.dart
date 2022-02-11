@@ -2,7 +2,6 @@ import 'package:deriv_app_sample/core/bloc_manager/event_listener_contracts/conn
 import 'package:deriv_app_sample/core/enums.dart';
 import 'package:flutter_deriv_api/services/connection/connection_service.dart';
 import 'package:flutter_deriv_api/state/connection/connection_cubit.dart';
-
 import 'package:flutter_deriv_bloc_manager/manager.dart';
 
 /// Connection state emitter.

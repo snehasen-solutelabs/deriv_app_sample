@@ -2,6 +2,7 @@ import 'package:deriv_app_sample/core/Presentation/blocs/ActiveSymbols/active_sy
 import 'package:deriv_app_sample/core/Presentation/blocs/ActiveSymbols/active_symbols_state.dart';
 import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_cubit.dart';
+import 'package:deriv_app_sample/core/Presentation/blocs/ticks/ticks_stream_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/widgets/active_symbol_widget.dart';
 import 'package:deriv_app_sample/core/Presentation/widgets/contracts_type_widget.dart';
 import 'package:deriv_app_sample/core/widgets/drop_down_menu.dart';
@@ -21,26 +22,30 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   late final ActiveSymbolCubit _activeSymbolsCubit;
   late final AvailableContractsCubit _availableContractsCubit;
-
+  late final TickStreamCubit _tickStreamCubit;
   @override
   void initState() {
     super.initState();
 
     _activeSymbolsCubit = BlocManager.instance.fetch<ActiveSymbolCubit>();
 
-    _activeSymbolsCubit.fetchActiveSymbols(showLoadingIndicator: false);
+    _activeSymbolsCubit.fetchSymbols(showLoadingIndicator: false);
 
     _availableContractsCubit =
         BlocManager.instance.fetch<AvailableContractsCubit>();
 
-    _availableContractsCubit
-        .fetchAvailableContracts(_activeSymbolsCubit.state.selectedSymbol);
+    _tickStreamCubit = BlocManager.instance.fetch<TickStreamCubit>();
+
+    _setupBlocs();
   }
+
+  void _setupBlocs() {}
 
   @override
   void dispose() {
     _availableContractsCubit.close();
     _activeSymbolsCubit.close();
+    _tickStreamCubit.close();
 
     super.dispose();
   }
@@ -50,6 +55,9 @@ class _MainPageState extends State<MainPage> {
         providers: <BlocProvider<dynamic>>[
           BlocProvider<ActiveSymbolCubit>.value(
             value: _activeSymbolsCubit,
+          ),
+          BlocProvider<TickStreamCubit>.value(
+            value: _tickStreamCubit,
           ),
           BlocProvider<AvailableContractsCubit>.value(
             value: _availableContractsCubit,
@@ -63,6 +71,7 @@ class _MainPageState extends State<MainPage> {
             Expanded(
                 child: ContractsTypeWidget(
               availableContractsCubit: _availableContractsCubit,
+              activeSymbol: _activeSymbolsCubit.state.selectedSymbol,
             )),
             // Expanded(flex: 2, child: PriceProposalWidget()),
           ],

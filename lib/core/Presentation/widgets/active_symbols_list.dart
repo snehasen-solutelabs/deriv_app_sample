@@ -1,13 +1,10 @@
 import 'package:deriv_app_sample/core/Presentation/blocs/ActiveSymbols/active_symbol_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/blocs/ActiveSymbols/active_symbols_state.dart';
+import 'package:deriv_app_sample/core/Presentation/blocs/AvailableContracts/available_contracts_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:flutter_deriv_api/api/common/active_symbols/active_symbols.dart';
 import 'package:flutter_deriv_bloc_manager/bloc_managers/bloc_manager.dart';
 
@@ -33,10 +30,15 @@ class ActiveSymbolsList extends StatelessWidget {
                   return ListTile(
                     title: Text(activeSymbol.displayName!),
                     onTap: () {
+                      //on select active symbol from list
                       BlocManager.instance
                           .fetch<ActiveSymbolCubit>()
                           .onSelectActiveSymbols(
                               activeSymbol, state.activeSymbols);
+                      // on load contract from selected symbol
+                      BlocManager.instance
+                          .fetch<AvailableContractsCubit>()
+                          .onLoadedSymbol(activeSymbol);
 
                       Navigator.of(context).pop();
                     },

@@ -5,17 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_deriv_api/api/common/active_symbols/active_symbols.dart';
 import 'package:flutter_deriv_api/api/contract/models/available_contract_model.dart';
+import 'package:flutter_deriv_bloc_manager/bloc_managers/bloc_manager.dart';
 
 /// ContractsTypeWidget
 class ContractsTypeWidget extends StatefulWidget {
   const ContractsTypeWidget({
     required this.availableContractsCubit,
+    required this.activeSymbol,
     Key? key,
   }) : super(key: key);
 
   /// Market item to be shown along with its subscription cubit.
 
   final AvailableContractsCubit availableContractsCubit;
+  final ActiveSymbol? activeSymbol;
 
   @override
   _ContractsTypeWidgetState createState() => _ContractsTypeWidgetState();
@@ -23,10 +26,15 @@ class ContractsTypeWidget extends StatefulWidget {
 
 class _ContractsTypeWidgetState extends State<ContractsTypeWidget> {
   // ignore: close_sinks
-  AvailableContractsCubit? _availableContractsCubit;
 
   @override
   void initState() {
+    BlocManager.instance.fetch<AvailableContractsCubit>();
+
+    BlocManager.instance
+        .fetch<AvailableContractsCubit>()
+        .onLoadedSymbol(widget.activeSymbol);
+
     super.initState();
   }
 

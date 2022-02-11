@@ -5,7 +5,6 @@ abstract class ActiveSymbolsState {
     this.selectedSymbol,
   });
 
-  /// Markers list.
   final ActiveSymbol? selectedSymbol;
 }
 
@@ -23,6 +22,7 @@ class ActiveSymbolsLoadedState extends ActiveSymbolsState {
   final ActiveSymbol? _selectedSymbol;
 
   /// Selected symbol
+  @override
   ActiveSymbol? get selectedSymbol => _selectedSymbol;
   @override
   String toString() => 'ActiveSymbolsLoaded ${activeSymbols!.length} symbols';
@@ -33,19 +33,3 @@ class ActiveSymbolsErrorState extends ActiveSymbolsState {
 
   final String errorMessage;
 }
-
-// class ActiveSymbolSelectedState extends ActiveSymbolsState {
-//  ActiveSymbolSelectedState({
-//     this.activeSymbols,
-//     ActiveSymbol? selectedSymbol,
-//   }) : _selectedSymbol = selectedSymbol ?? activeSymbols?.first;
-
-//   List<ActiveSymbol>? activeSymbols;
-//   final ActiveSymbol? _selectedSymbol;
-
-//   /// Selected symbol
-//   @override
-//   ActiveSymbol? get selectedSymbol => _selectedSymbol;
-//   @override
-//   String toString() => 'ActiveSymbolsLoaded ${activeSymbols!.length} symbols';
-// }

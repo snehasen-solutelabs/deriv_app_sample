@@ -1,17 +1,14 @@
-import 'package:flutter_deriv_api/api/common/active_symbols/active_symbols.dart';
 import 'package:flutter_deriv_api/api/contract/contracts_for/contracts_for_symbol.dart';
-import 'package:flutter_deriv_api/api/contract/models/available_contract_model.dart';
-
 import 'package:flutter_deriv_bloc_manager/manager.dart';
 
-/// Interface for blocs that need ActiveSymbols.
+/// Interface for blocs that need Contract.
 abstract class AvailableContractEventListener implements BaseEventListener {
-  /// on ActiveSymbols loaded event handler.
-  void onContractLoaded(final ContractsForSymbol? availableContracts);
+  /// on Contract loaded event handler.
+  void onContractLoaded(ContractsForSymbol? availableContracts);
 
-  /// on ActiveSymbols loading event handler.
+  /// on Contract loading event handler.
   void onContractLoading();
 
-  /// On ActiveSymbols error event handler.
+  /// On Contract error event handler.
   void onContractError(String error);
 }

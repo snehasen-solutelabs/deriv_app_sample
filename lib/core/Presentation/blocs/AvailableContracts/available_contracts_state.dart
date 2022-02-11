@@ -1,6 +1,5 @@
 // AvailableContractsState
 import 'package:flutter_deriv_api/api/contract/contracts_for/contracts_for_symbol.dart';
-import 'package:flutter_deriv_api/api/contract/models/available_contract_model.dart';
 
 abstract class AvailableContractsState {
   /// Initializes
