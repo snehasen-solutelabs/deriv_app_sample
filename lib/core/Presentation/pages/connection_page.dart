@@ -8,7 +8,7 @@ import 'main_page.dart';
 
 class AppScreen extends StatefulWidget {
   const AppScreen({Key? key}) : super(key: key);
-  static const String routeName = 'app_screen_page';
+
   @override
   State<AppScreen> createState() => _AppScreenState();
 }
@@ -32,7 +32,7 @@ class _AppScreenState extends State<AppScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Drive Demo"),
+        title: const Text("DriveGo Practice"),
       ),
       body: BlocBuilder<connection_cubit.ConnectionCubit,
           connection_cubit.ConnectionState>(

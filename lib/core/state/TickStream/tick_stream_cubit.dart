@@ -10,10 +10,15 @@ class TickStreamCubit extends Cubit<TickStreamState> {
   TickStreamCubit() : super(TicksLoading());
 
   Future<void> onLoadedSymbolTickView(ActiveSymbol? selectedSymbol) async {
-    final Tick? tick = await _subscribeTick(selectedSymbol).first;
-    emit(
-      TicksLoaded(tick),
-    );
+    try {
+      final Tick? tick = await _subscribeTick(selectedSymbol).first;
+
+      emit(
+        TicksLoaded(tick),
+      );
+    } on Exception catch (e) {
+      emit(TicksError('$e'));
+    }
   }
 
   Stream<Tick?> _subscribeTick(ActiveSymbol? selectedSymbol) =>
