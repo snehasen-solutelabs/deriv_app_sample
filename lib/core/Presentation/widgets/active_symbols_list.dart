@@ -1,6 +1,8 @@
-import 'package:deriv_app_sample/core/state/ActiveSymbols/active_symbol_cubit.dart';
-import 'package:deriv_app_sample/core/state/ActiveSymbols/active_symbols_state.dart';
-import 'package:deriv_app_sample/core/state/AvailableContracts/available_contracts_cubit.dart';
+import 'package:deriv_app_sample/core/Presentation/state/ActiveSymbols/active_symbol_cubit.dart';
+
+import 'package:deriv_app_sample/core/Presentation/state/ActiveSymbols/active_symbols_state.dart';
+import 'package:deriv_app_sample/core/Presentation/state/AvailableContracts/available_contracts_cubit.dart';
+
 import 'package:deriv_app_sample/core/state/TickStream/tick_stream_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

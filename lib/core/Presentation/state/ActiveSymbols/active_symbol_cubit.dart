@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:deriv_app_sample/core/state/AvailableContracts/available_contracts_cubit.dart';
+import 'package:deriv_app_sample/core/Presentation/state/AvailableContracts/available_contracts_cubit.dart';
 import 'package:deriv_app_sample/core/state/TickStream/tick_stream_cubit.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_deriv_api/api/common/active_symbols/active_symbols.dart';
 import 'package:flutter_deriv_api/basic_api/generated/api.dart';

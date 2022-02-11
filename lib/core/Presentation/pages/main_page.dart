@@ -1,11 +1,12 @@
+import 'package:deriv_app_sample/core/Presentation/state/ActiveSymbols/active_symbol_cubit.dart';
+import 'package:deriv_app_sample/core/Presentation/state/AvailableContracts/available_contracts_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/widgets/active_symbol_widget.dart';
 import 'package:deriv_app_sample/core/Presentation/widgets/contracts_type_widget.dart';
 import 'package:deriv_app_sample/core/Presentation/widgets/tick_display_widget.dart';
-import 'package:deriv_app_sample/core/state/ActiveSymbols/active_symbol_cubit.dart';
-import 'package:deriv_app_sample/core/state/AvailableContracts/available_contracts_cubit.dart';
+
 import 'package:deriv_app_sample/core/state/TickStream/tick_stream_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flutter_deriv_bloc_manager/bloc_managers/bloc_manager.dart';
 
 /// MainPage
@@ -49,31 +50,18 @@ class _MainPageState extends State<MainPage> {
   }
 
   @override
-  Widget build(BuildContext context) => MultiBlocProvider(
-        providers: <BlocProvider<dynamic>>[
-          BlocProvider<ActiveSymbolCubit>.value(
-            value: _activeSymbolsCubit,
+  Widget build(BuildContext context) => Column(
+        children: <Widget>[
+          ActiveSymbolsWidget(activeSymbolCubit: _activeSymbolsCubit),
+          TickDisplayWidget(
+            tickSymbolCubit: _tickStreamCubit,
+            activeSymbol: _activeSymbolsCubit.state.selectedSymbol,
           ),
-          BlocProvider<TickStreamCubit>.value(
-            value: _tickStreamCubit,
-          ),
-          BlocProvider<AvailableContractsCubit>.value(
-            value: _availableContractsCubit,
-          ),
+          Expanded(
+              child: ContractsTypeWidget(
+            availableContractsCubit: _availableContractsCubit,
+            activeSymbol: _activeSymbolsCubit.state.selectedSymbol,
+          )),
         ],
-        child: Column(
-          children: <Widget>[
-            ActiveSymbolsWidget(activeSymbolCubit: _activeSymbolsCubit),
-            TickDisplayWidget(
-              tickSymbolCubit: _tickStreamCubit,
-              activeSymbol: _activeSymbolsCubit.state.selectedSymbol,
-            ),
-            Expanded(
-                child: ContractsTypeWidget(
-              availableContractsCubit: _availableContractsCubit,
-              activeSymbol: _activeSymbolsCubit.state.selectedSymbol,
-            )),
-          ],
-        ),
       );
 }

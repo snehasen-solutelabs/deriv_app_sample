@@ -1,7 +1,7 @@
+import 'package:deriv_app_sample/core/Presentation/state/ActiveSymbols/active_symbol_cubit.dart';
+import 'package:deriv_app_sample/core/Presentation/state/AvailableContracts/available_contracts_cubit.dart';
 import 'package:deriv_app_sample/core/bloc_manager/state_emitters/tick_state_emitter.dart';
 
-import 'package:deriv_app_sample/core/state/ActiveSymbols/active_symbol_cubit.dart';
-import 'package:deriv_app_sample/core/state/AvailableContracts/available_contracts_cubit.dart';
 import 'package:deriv_app_sample/core/state/TickStream/tick_stream_cubit.dart';
 
 import 'package:flutter/material.dart';

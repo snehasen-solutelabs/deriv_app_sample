@@ -3,7 +3,6 @@ import 'package:flutter_deriv_api/api/common/tick/tick.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_deriv_api/api/common/active_symbols/active_symbols.dart';
-import 'package:flutter_deriv_bloc_manager/manager.dart';
 
 /// ActiveSymbolsWidget
 class TickDisplayWidget extends StatefulWidget {
@@ -35,48 +34,37 @@ class _TickDisplayWidgetState extends State<TickDisplayWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(8),
-        child: Card(
-          elevation: 5,
-          child: Stack(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: Center(
-                  child: BlocBuilder<TickStreamCubit, TickStreamState>(
-                    bloc: widget.tickSymbolCubit,
-                    builder: (BuildContext context, TickStreamState state) {
-                      if (state is TicksLoaded) {
-                        Tick? tick = state.tick;
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Symbol : ${tick?.symbol}",
-                              style: const TextStyle(fontSize: 16),
-                              textAlign: TextAlign.left,
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              "Price : ${tick?.quote}",
-                              style: const TextStyle(fontSize: 16),
-                              textAlign: TextAlign.left,
-                            ),
-                          ],
-                        );
-                      } else if (state is TicksError) {
-                        return Text(state.message ?? 'An error occurred');
-                      } else {
-                        return const CircularProgressIndicator();
-                      }
-                    },
-                  ),
-                ),
-              ),
-            ],
+  Widget build(BuildContext context) => Stack(
+        children: <Widget>[
+          Center(
+            child: BlocBuilder<TickStreamCubit, TickStreamState>(
+              bloc: widget.tickSymbolCubit,
+              builder: (BuildContext context, TickStreamState state) {
+                if (state is TicksLoaded) {
+                  Tick? tick = state.tick;
+                  return Column(
+                    children: [
+                      Text(
+                        "Symbol : ${tick?.symbol}",
+                        style: const TextStyle(fontSize: 16),
+                        textAlign: TextAlign.left,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "Price : ${tick?.quote}",
+                        style: const TextStyle(fontSize: 16),
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  );
+                } else if (state is TicksError) {
+                  return Text(state.message ?? 'An error occurred');
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
           ),
-        ),
-        // ),
+        ],
       );
 }

@@ -1,5 +1,5 @@
-import 'package:deriv_app_sample/core/state/AvailableContracts/available_contracts_cubit.dart';
-import 'package:deriv_app_sample/core/state/AvailableContracts/available_contracts_state.dart';
+import 'package:deriv_app_sample/core/Presentation/state/AvailableContracts/available_contracts_cubit.dart';
+import 'package:deriv_app_sample/core/Presentation/state/AvailableContracts/available_contracts_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_deriv_api/api/common/active_symbols/active_symbols.dart';
@@ -32,7 +32,7 @@ class _ContractsTypeWidgetState extends State<ContractsTypeWidget> {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(5),
         child: Card(
           elevation: 5,
           child: Stack(
@@ -63,26 +63,18 @@ class _ContractsTypeWidgetState extends State<ContractsTypeWidget> {
                                 const SizedBox(height: 10),
                                 Text(
                                   "Category : ${contract.contractCategory!}",
-                                  style: const TextStyle(fontSize: 14),
-                                  textAlign: TextAlign.left,
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
                                   "Name : ${contract.contractDisplay!}",
-                                  style: const TextStyle(fontSize: 14),
-                                  textAlign: TextAlign.left,
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
                                   "Market : ${contract.market!}",
-                                  style: const TextStyle(fontSize: 14),
-                                  textAlign: TextAlign.left,
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
                                   "Sub Market : ${contract.submarket!}",
-                                  style: const TextStyle(fontSize: 14),
-                                  textAlign: TextAlign.left,
                                 ),
                                 const SizedBox(height: 10),
                               ],

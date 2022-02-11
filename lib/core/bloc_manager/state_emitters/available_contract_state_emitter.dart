@@ -1,6 +1,7 @@
+import 'package:deriv_app_sample/core/Presentation/state/AvailableContracts/available_contracts_cubit.dart';
 import 'package:deriv_app_sample/core/bloc_manager/event_listener_contracts/available_contract_event_listner.dart';
-import 'package:deriv_app_sample/core/state/AvailableContracts/available_contracts_cubit.dart';
-import 'package:deriv_app_sample/core/state/AvailableContracts/available_contracts_state.dart';
+
+import 'package:deriv_app_sample/core/Presentation/state/AvailableContracts/available_contracts_state.dart';
 import 'package:flutter_deriv_bloc_manager/manager.dart';
 
 /// Contract state emitter.
