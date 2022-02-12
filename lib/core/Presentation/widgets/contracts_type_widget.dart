@@ -39,6 +39,7 @@ class _ContractsTypeWidgetState extends State<ContractsTypeWidget> {
           elevation: 5,
           child: BlocBuilder<AvailableContractsCubit, AvailableContractsState>(
             bloc: _availableContractsCubit,
+            key: const Key('builder'),
             builder: (BuildContext context, AvailableContractsState state) {
               if (state is AvailableContractsLoaded) {
                 return ListView.separated(

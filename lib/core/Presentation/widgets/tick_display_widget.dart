@@ -34,10 +34,12 @@ class _TickDisplayWidgetState extends State<TickDisplayWidget> {
   Widget build(BuildContext context) =>
       BlocBuilder<TickStreamCubit, TickStreamState>(
         bloc: _tickStreamCubit,
+        key: const Key('selected_symbol_tick'),
         builder: (BuildContext context, TickStreamState state) {
           if (state is TicksLoaded) {
             Tick? tick = state.tick;
             return Column(
+              key: const Key('detail_column'),
               children: [
                 const SizedBox(height: 10),
                 Text(
@@ -55,9 +57,9 @@ class _TickDisplayWidgetState extends State<TickDisplayWidget> {
               ],
             );
           } else if (state is TicksError) {
-            return Center(child: Text(state.message ?? 'An error occurred'));
+            return const Text('Market is Closed');
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return const Text('Loading..');
           }
         },
       );

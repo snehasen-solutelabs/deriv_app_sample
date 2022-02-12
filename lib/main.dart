@@ -16,9 +16,11 @@ import 'package:flutter_deriv_bloc_manager/event_dispatcher.dart';
 import 'package:deriv_app_sample/core/bloc_manager/state_emitters/active_symbols_state_emitter.dart';
 import 'package:deriv_app_sample/core/bloc_manager/state_emitters/available_contract_state_emitter.dart';
 import 'package:deriv_app_sample/core/bloc_manager/state_emitters/connection_state_emitter.dart';
+import 'package:mockito/annotations.dart';
 
 import 'core/Presentation/pages/connection_page.dart';
 
+@GenerateMocks([])
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = CubitObserver();
