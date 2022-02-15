@@ -1,26 +1,36 @@
+import 'package:deriv_app_sample/core/bloc_manager/event_listener_contracts/select_symbol_event_listner.dart';
 import 'package:flutter_deriv_api/api/common/forget/forget_all.dart';
 import 'package:flutter_deriv_api/api/common/tick/tick.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_deriv_api/api/common/active_symbols/active_symbols.dart';
 import 'package:flutter_deriv_api/basic_api/generated/api.dart';
-part 'tick_stream_state.dart';
+part 'tick_state.dart';
 
-/// TicksBloc
-class TickStreamCubit extends Cubit<TickStreamState> {
-  TickStreamCubit() : super(TicksLoading());
+/// TicksCubit
+class TickCubit extends Cubit<TickStreamState>
+    implements SelectActiveSymbolEventListener {
+  // initial loading state
+  TickCubit() : super(TicksLoading());
 
-  Future<void> onLoadedSymbolTickView(ActiveSymbol? selectedSymbol) async {
+//subscribe for ticks
+  Future<void> subscribeTicks({required ActiveSymbol selectedSymbol}) async {
     try {
+      emit(TicksLoading());
+
+      await _unsubscribeTick();
+
       final Tick? tick = await _subscribeTick(selectedSymbol).first;
 
-      emit(
-        TicksLoaded(tick),
-      );
+      emit(TicksLoaded(tick: tick));
+      // _subscribeTick(selectedSymbol).listen((Tick? tick) {
+      //   emit(TicksLoaded(tick: tick));
+      // });
     } on Exception catch (e) {
       emit(TicksError('$e'));
     }
   }
 
+// streaming tick in each time  when refrtesh
   Stream<Tick?> _subscribeTick(ActiveSymbol? selectedSymbol) =>
       Tick.subscribeTick(
         TicksRequest(ticks: selectedSymbol?.symbol),
@@ -33,5 +43,10 @@ class TickStreamCubit extends Cubit<TickStreamState> {
     await _unsubscribeTick();
 
     await super.close();
+  }
+
+  @override
+  void onSelectActiveSymbol(ActiveSymbol selectedSymbol) {
+    subscribeTicks(selectedSymbol: selectedSymbol);
   }
 }

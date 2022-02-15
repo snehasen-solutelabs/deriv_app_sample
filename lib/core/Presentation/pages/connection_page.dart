@@ -4,7 +4,7 @@ import 'package:flutter_deriv_api/state/connection/connection_cubit.dart'
     as connection_cubit;
 import 'package:flutter_deriv_bloc_manager/manager.dart';
 
-import 'main_page.dart';
+import 'dashboard.dart';
 
 class AppScreen extends StatefulWidget {
   const AppScreen({Key? key}) : super(key: key);
@@ -40,7 +40,7 @@ class _AppScreenState extends State<AppScreen> {
         builder:
             (BuildContext context, connection_cubit.ConnectionState state) {
           if (state is connection_cubit.ConnectionConnectedState) {
-            return const MainPage();
+            return const Dashboard();
           } else if (state is connection_cubit.ConnectionConnectingState) {
             return _buildCenterText('Connecting...');
           } else if (state is connection_cubit.ConnectionErrorState) {

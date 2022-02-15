@@ -1,9 +1,9 @@
 import 'package:deriv_app_sample/core/Presentation/states/ActiveSymbols/active_symbol_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/states/AvailableContracts/available_contracts_cubit.dart';
-import 'package:deriv_app_sample/core/bloc_manager/state_emitters/tick_state_emitter.dart';
-
-import 'package:deriv_app_sample/core/state/TickStream/tick_stream_cubit.dart';
-
+import 'package:deriv_app_sample/core/Presentation/states/TickStream/tick_cubit.dart';
+import 'package:deriv_app_sample/core/Presentation/states/selectionCubit/selected_symbol_cubit.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_deriv_api/services/connection/api_manager/connection_information.dart';
@@ -14,13 +14,12 @@ import 'package:flutter_deriv_bloc_manager/bloc_observer.dart';
 import 'package:flutter_deriv_bloc_manager/event_dispatcher.dart';
 
 import 'package:deriv_app_sample/core/bloc_manager/state_emitters/active_symbols_state_emitter.dart';
-import 'package:deriv_app_sample/core/bloc_manager/state_emitters/available_contract_state_emitter.dart';
+import 'package:deriv_app_sample/core/bloc_manager/state_emitters/select_symbol_state_emitter.dart';
 import 'package:deriv_app_sample/core/bloc_manager/state_emitters/connection_state_emitter.dart';
-import 'package:mockito/annotations.dart';
 
 import 'core/Presentation/pages/connection_page.dart';
 
-@GenerateMocks([])
+@GenerateMocks([SelectSymbolCubit])
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = CubitObserver();
@@ -54,7 +53,8 @@ void registerCoreBlocs() {
       ),
     )
     ..register(ActiveSymbolCubit())
-    ..register(TickStreamCubit())
+    ..register(SelectSymbolCubit())
+    ..register(TickCubit())
     ..register(AvailableContractsCubit());
 }
 
@@ -66,9 +66,6 @@ void initializeEventDispatcher() => EventDispatcher(BlocManager.instance)
   ..register<ActiveSymbolCubit, ActiveSymbolsStateEmitter>(
     (BaseBlocManager blocManager) => ActiveSymbolsStateEmitter(blocManager),
   )
-  ..register<TickStreamCubit, TickStateEmitter>(
-    (BaseBlocManager blocManager) => TickStateEmitter(blocManager),
-  )
-  ..register<AvailableContractsCubit, AvailableContractStateEmitter>(
-    (BaseBlocManager blocManager) => AvailableContractStateEmitter(blocManager),
+  ..register<SelectSymbolCubit, SelectSymbolsStateEmitter>(
+    (BaseBlocManager blocManager) => SelectSymbolsStateEmitter(blocManager),
   );

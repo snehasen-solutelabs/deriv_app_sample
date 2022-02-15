@@ -1,4 +1,4 @@
-import 'package:deriv_app_sample/core/state/TickStream/tick_stream_cubit.dart';
+import 'package:deriv_app_sample/core/Presentation/states/TickStream/tick_cubit.dart';
 import 'package:flutter_deriv_api/api/common/tick/tick.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,23 +16,22 @@ class TickDisplayWidget extends StatefulWidget {
 }
 
 class _TickDisplayWidgetState extends State<TickDisplayWidget> {
-  late final TickStreamCubit _tickStreamCubit;
+  late final TickCubit _tickStreamCubit;
   @override
   void initState() {
-    _tickStreamCubit = BlocManager.instance.fetch<TickStreamCubit>();
+    _tickStreamCubit = BlocManager.instance.fetch<TickCubit>();
 
     super.initState();
   }
 
   @override
   void dispose() {
-    BlocManager.instance.dispose<TickStreamCubit>();
+    BlocManager.instance.dispose<TickCubit>();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) =>
-      BlocBuilder<TickStreamCubit, TickStreamState>(
+  Widget build(BuildContext context) => BlocBuilder<TickCubit, TickStreamState>(
         bloc: _tickStreamCubit,
         key: const Key('selected_symbol_tick'),
         builder: (BuildContext context, TickStreamState state) {

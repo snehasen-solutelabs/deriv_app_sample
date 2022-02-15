@@ -4,14 +4,14 @@ import 'package:deriv_app_sample/core/Presentation/widgets/tick_display_widget.d
 import 'package:flutter/material.dart';
 
 /// MainPage
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+class Dashboard extends StatefulWidget {
+  const Dashboard({Key? key}) : super(key: key);
 
   @override
-  _MainPageState createState() => _MainPageState();
+  _DashboardPageState createState() => _DashboardPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _DashboardPageState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
@@ -25,8 +25,11 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) => Column(
         children: <Widget>[
+          // shows drop down with index 0 selected symbol
           ActiveSymbolsWidget(),
+          // shows tick Stream for index 0 selected symbol
           TickDisplayWidget(),
+          // shows contracts for index 0 selected symbol
           Expanded(child: ContractsTypeWidget()),
         ],
       );

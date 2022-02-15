@@ -1,55 +1,28 @@
 import 'dart:async';
-
-import 'package:deriv_app_sample/core/Presentation/states/AvailableContracts/available_contracts_cubit.dart';
-import 'package:deriv_app_sample/core/state/TickStream/tick_stream_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_deriv_api/api/common/active_symbols/active_symbols.dart';
 import 'package:flutter_deriv_api/basic_api/generated/api.dart';
-import 'package:flutter_deriv_bloc_manager/bloc_managers/bloc_manager.dart';
 
 import 'active_symbols_state.dart';
 
-class ActiveSymbolCubit extends Cubit<ActiveSymbolsState> {
-  ActiveSymbolCubit() : super(ActiveSymbolsInitialState());
+class ActiveSymbolCubit extends Cubit<ActiveSymbolState> {
+  ActiveSymbolCubit() : super(ActiveSymbolInitialState());
   static const String _activeSymbolType = 'brief';
   static const String _productType = 'basic';
 
   Future<void> fetchActiveSymbols({bool showLoadingIndicator = true}) async {
     try {
       if (showLoadingIndicator) {
-        emit(ActiveSymbolsLoadingState());
+        emit(ActiveSymbolLoadingState());
       }
 
       final List<ActiveSymbol> activeSymbols = await _fetchActiveSymbols();
       emit(
-        ActiveSymbolsLoadedState(activeSymbols: activeSymbols),
+        ActiveSymbolLoadedState(activeSymbols: activeSymbols),
       );
-
-      onRefreshViews(activeSymbols.first, activeSymbols);
     } on Exception catch (e) {
-      emit(ActiveSymbolsErrorState('$e'));
+      emit(ActiveSymbolErrorState('$e'));
     }
-  }
-
-// initial load
-  Future<void> onRefreshViews(
-      ActiveSymbol symbol, List<ActiveSymbol>? list) async {
-    emit(
-      ActiveSymbolsLoadedState(activeSymbols: list, selectedSymbol: symbol),
-    );
-
-    BlocManager.instance.fetch<AvailableContractsCubit>();
-
-    BlocManager.instance
-        .fetch<AvailableContractsCubit>()
-        .onLoadedSymbol(symbol);
-
-    // updating Tick List
-    BlocManager.instance.fetch<TickStreamCubit>();
-
-    BlocManager.instance
-        .fetch<TickStreamCubit>()
-        .onLoadedSymbolTickView(symbol);
   }
 
   Future<List<ActiveSymbol>> _fetchActiveSymbols() =>

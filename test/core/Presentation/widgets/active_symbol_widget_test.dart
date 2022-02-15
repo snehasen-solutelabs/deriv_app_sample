@@ -1,8 +1,9 @@
 import 'package:deriv_app_sample/core/Presentation/states/ActiveSymbols/active_symbol_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/states/AvailableContracts/available_contracts_cubit.dart';
+import 'package:deriv_app_sample/core/Presentation/states/TickStream/tick_cubit.dart';
+import 'package:deriv_app_sample/core/Presentation/states/selectionCubit/selected_symbol_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/widgets/active_symbol_widget.dart';
 import 'package:deriv_app_sample/core/Presentation/widgets/active_symbols_dropdown_widget.dart';
-import 'package:deriv_app_sample/core/state/TickStream/tick_stream_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deriv_api/services/connection/api_manager/connection_information.dart';
 import 'package:flutter_deriv_api/state/connection/connection_cubit.dart';
@@ -19,14 +20,15 @@ void main() {
             isMock: true))
         ..register(ActiveSymbolCubit())
         ..register(AvailableContractsCubit())
-        ..register(TickStreamCubit());
+        ..register(SelectSymbolCubit());
     });
 
     tearDownAll(() {
       BlocManager.instance.dispose<ConnectionCubit>();
       BlocManager.instance.dispose<ActiveSymbolCubit>();
+      BlocManager.instance.dispose<SelectSymbolCubit>();
     });
-    testWidgets('Active Symbol sWidget Loaded', (WidgetTester tester) async {
+    testWidgets('Active Symbol Widget', (WidgetTester tester) async {
       await tester.pumpWidget(_TestApp());
       await tester.idle();
       await tester.pumpAndSettle();

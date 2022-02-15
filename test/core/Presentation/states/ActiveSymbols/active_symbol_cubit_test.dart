@@ -9,10 +9,10 @@ import 'package:mocktail/mocktail.dart';
 
 import 'active_symbol_cubit_data.dart';
 
-class MockActiveSymbolCubit extends MockCubit<ActiveSymbolsState>
+class MockActiveSymbolCubit extends MockCubit<ActiveSymbolState>
     implements ActiveSymbolCubit {}
 
-class FakeActiveSymbolState extends Fake implements ActiveSymbolsState {}
+class FakeActiveSymbolState extends Fake implements ActiveSymbolState {}
 
 void main() {
   setUpAll(() {
@@ -27,35 +27,32 @@ void main() {
 
       whenListen(
           activeSymbolCubit,
-          Stream<ActiveSymbolsState>.fromIterable(<ActiveSymbolsState>[
-            ActiveSymbolsInitialState(),
-            ActiveSymbolsLoadingState(),
-            ActiveSymbolsLoadedState(
-                activeSymbols: activeSymbols,
-                selectedSymbol: activeSymbols.first)
+          Stream<ActiveSymbolState>.fromIterable(<ActiveSymbolState>[
+            ActiveSymbolInitialState(),
+            ActiveSymbolLoadingState(),
+            ActiveSymbolLoadedState(
+              activeSymbols: activeSymbols,
+            )
           ]));
 
       await expectLater(
           activeSymbolCubit.stream,
           emitsInOrder(<dynamic>[
-            isA<ActiveSymbolsInitialState>(),
-            isA<ActiveSymbolsLoadingState>(),
-            isA<ActiveSymbolsLoadedState>(),
+            isA<ActiveSymbolInitialState>(),
+            isA<ActiveSymbolLoadingState>(),
+            isA<ActiveSymbolLoadedState>(),
           ]));
 
-      final ActiveSymbolsLoadedState currentState =
-          activeSymbolCubit.state as ActiveSymbolsLoadedState;
-      expect(currentState, isA<ActiveSymbolsLoadedState>());
+      final ActiveSymbolLoadedState currentState =
+          activeSymbolCubit.state as ActiveSymbolLoadedState;
+      expect(currentState, isA<ActiveSymbolLoadedState>());
 
       expect(currentState.activeSymbols, isNotNull);
       expect(currentState.activeSymbols, isA<List<ActiveSymbol>>());
-
-      expect(currentState.selectedSymbol, isNotNull);
-      expect(currentState.selectedSymbol, isA<ActiveSymbol>());
     });
 
     final Exception exception = Exception('active symbol cubit exception.');
-    blocTest<ActiveSymbolCubit, ActiveSymbolsState>(
+    blocTest<ActiveSymbolCubit, ActiveSymbolState>(
         'captures exceptions => (active_symbols_cubit).',
         build: () => ActiveSymbolCubit(),
         act: (ActiveSymbolCubit cubit) => cubit.addError(exception),

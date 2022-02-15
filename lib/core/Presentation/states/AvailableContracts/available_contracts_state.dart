@@ -1,40 +1,27 @@
 // AvailableContractsState
 import 'package:flutter_deriv_api/api/contract/contracts_for/contracts_for_symbol.dart';
 
-abstract class AvailableContractsState {
-  /// Initializes
-  AvailableContractsState();
-}
+abstract class AvailableContractsState {}
 
-/// AvailableContractsLoading
-class AvailableContractsLoading extends AvailableContractsState {
-  @override
-  String toString() => 'AvailableContractsLoading...';
-}
+/// Loading state for available contracts
+class AvailableContractsLoading extends AvailableContractsState {}
 
-/// AvailableContractsError
+/// Error state for available contracts
 class AvailableContractsError extends AvailableContractsState {
   /// Initializes
-  AvailableContractsError(this.message);
+  AvailableContractsError(this.errorMessage);
 
   /// Error message
-  final String? message;
-
-  @override
-  String toString() => 'AvailableContractsError';
+  final String errorMessage;
 }
 
-/// AvailableContractsLoaded
+///Loaded state for available contracts
 class AvailableContractsLoaded extends AvailableContractsState {
-  ///Initializes
+  /// Initializes
   AvailableContractsLoaded({
     this.contracts,
   });
 
   /// Contracts
   final ContractsForSymbol? contracts;
-
-  @override
-  String toString() =>
-      'AvailableContractsLoaded ${contracts!.availableContracts!.length} contracts';
 }

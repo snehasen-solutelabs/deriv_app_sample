@@ -20,6 +20,7 @@ class _ContractsTypeWidgetState extends State<ContractsTypeWidget> {
 
   @override
   void initState() {
+    BlocManager.instance.register(AvailableContractsCubit());
     _availableContractsCubit =
         BlocManager.instance.fetch<AvailableContractsCubit>();
 
@@ -42,15 +43,17 @@ class _ContractsTypeWidgetState extends State<ContractsTypeWidget> {
             key: const Key('builder'),
             builder: (BuildContext context, AvailableContractsState state) {
               if (state is AvailableContractsLoaded) {
+                final List<AvailableContractModel?>? contracts =
+                    state.contracts?.availableContracts ??
+                        <AvailableContractModel>[];
                 return ListView.separated(
                   separatorBuilder: (context, index) => const Divider(
                     color: Colors.black,
                   ),
                   padding: const EdgeInsets.all(5),
-                  itemCount: state.contracts!.availableContracts!.length,
+                  itemCount: contracts!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final AvailableContractModel contract =
-                        state.contracts!.availableContracts![index]!;
+                    final AvailableContractModel contract = contracts[index]!;
 
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +80,7 @@ class _ContractsTypeWidgetState extends State<ContractsTypeWidget> {
                   },
                 );
               } else if (state is AvailableContractsError) {
-                return Text(state.message ?? 'An error occurred');
+                return Text('An error occurred');
               } else {
                 return const Center(child: CircularProgressIndicator());
               }

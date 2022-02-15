@@ -1,35 +1,30 @@
 import 'package:flutter_deriv_api/api/common/active_symbols/active_symbols.dart';
 
-abstract class ActiveSymbolsState {
-  const ActiveSymbolsState({
-    this.selectedSymbol,
+/// Base state for active symbol
+abstract class ActiveSymbolState {}
+
+/// Initial state for active symbol
+class ActiveSymbolInitialState extends ActiveSymbolState {}
+
+/// Loading state for active symbol
+class ActiveSymbolLoadingState extends ActiveSymbolState {}
+
+/// Loaded state for active symbol
+class ActiveSymbolLoadedState extends ActiveSymbolState {
+  /// Initializes
+  ActiveSymbolLoadedState({
+    required this.activeSymbols,
   });
 
-  final ActiveSymbol? selectedSymbol;
+  /// Active symbols
+  final List<ActiveSymbol> activeSymbols;
 }
 
-class ActiveSymbolsInitialState extends ActiveSymbolsState {}
+/// Error state for active symbol
+class ActiveSymbolErrorState extends ActiveSymbolState {
+  /// Initializes
+  ActiveSymbolErrorState(this.errorMessage);
 
-class ActiveSymbolsLoadingState extends ActiveSymbolsState {}
-
-class ActiveSymbolsLoadedState extends ActiveSymbolsState {
-  ActiveSymbolsLoadedState({
-    this.activeSymbols,
-    ActiveSymbol? selectedSymbol,
-  }) : _selectedSymbol = selectedSymbol ?? activeSymbols?.first;
-
-  List<ActiveSymbol>? activeSymbols;
-  final ActiveSymbol? _selectedSymbol;
-
-  /// Selected symbol
-  @override
-  ActiveSymbol? get selectedSymbol => _selectedSymbol;
-  @override
-  String toString() => 'ActiveSymbolsLoaded ${activeSymbols!.length} symbols';
-}
-
-class ActiveSymbolsErrorState extends ActiveSymbolsState {
-  ActiveSymbolsErrorState(this.errorMessage);
-
+  /// Error message
   final String errorMessage;
 }

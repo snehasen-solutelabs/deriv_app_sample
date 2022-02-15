@@ -1,4 +1,4 @@
-part of 'tick_stream_cubit.dart';
+part of 'tick_cubit.dart';
 
 /// TicksState
 abstract class TickStreamState {
@@ -28,12 +28,11 @@ class TicksError extends TickStreamState {
 
 /// TicksLoaded
 class TicksLoaded extends TickStreamState {
-  /// Initializes
-  TicksLoaded(this.tick);
+  ///initialize
+  TicksLoaded({
+    this.tick,
+  });
 
-  /// Loaded tick
+  ///tick object
   final Tick? tick;
-
-  @override
-  String toString() => 'Tick $tick loaded';
 }

@@ -15,11 +15,11 @@ class ActiveSymbolsStateEmitter
     required ActiveSymbolsEventListener eventListener,
     required Object state,
   }) {
-    if (state is ActiveSymbolsLoadedState) {
+    if (state is ActiveSymbolLoadedState) {
       eventListener.onActiveSymbolsLoaded(state.activeSymbols);
-    } else if (state is ActiveSymbolsLoadingState) {
+    } else if (state is ActiveSymbolLoadingState) {
       eventListener.onActiveSymbolsLoading();
-    } else if (state is ActiveSymbolsErrorState) {
+    } else if (state is ActiveSymbolErrorState) {
       eventListener.onActiveSymbolsError(state.errorMessage.toString());
     }
   }
