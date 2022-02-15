@@ -2,8 +2,7 @@ import 'package:deriv_app_sample/core/Presentation/states/ActiveSymbols/active_s
 import 'package:deriv_app_sample/core/Presentation/states/AvailableContracts/available_contracts_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/states/TickStream/tick_cubit.dart';
 import 'package:deriv_app_sample/core/Presentation/states/selectionCubit/selected_symbol_cubit.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_deriv_api/services/connection/api_manager/connection_information.dart';
@@ -19,7 +18,6 @@ import 'package:deriv_app_sample/core/bloc_manager/state_emitters/connection_sta
 
 import 'core/Presentation/pages/connection_page.dart';
 
-@GenerateMocks([SelectSymbolCubit])
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = CubitObserver();
