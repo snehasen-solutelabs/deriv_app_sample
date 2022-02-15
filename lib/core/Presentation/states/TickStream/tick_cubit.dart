@@ -19,12 +19,10 @@ class TickCubit extends Cubit<TickStreamState>
 
       await _unsubscribeTick();
 
-      final Tick? tick = await _subscribeTick(selectedSymbol).first;
-
-      emit(TicksLoaded(tick: tick));
-      // _subscribeTick(selectedSymbol).listen((Tick? tick) {
-      //   emit(TicksLoaded(tick: tick));
-      // });
+// listen in each and every call when updates from server
+      _subscribeTick(selectedSymbol).listen((Tick? tick) {
+        emit(TicksLoaded(tick: tick));
+      });
     } on Exception catch (e) {
       emit(TicksError('$e'));
     }
